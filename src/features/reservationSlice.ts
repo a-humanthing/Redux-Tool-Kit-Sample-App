@@ -4,7 +4,7 @@ interface reservationTypes {
   value: string[]
 }
 const initialState: reservationTypes = {
-  value: [],
+  value: ["arun", "sana"],
 }
 
 export const reservationSlice = createSlice({
@@ -15,7 +15,11 @@ export const reservationSlice = createSlice({
     addReservations: (state, action: PayloadAction<string>) => {
       state.value.push(action.payload)
     },
+    removeReservations: (state, action: PayloadAction<number>) => {
+      state.value.splice(action.payload, 1)
+    },
   },
 })
 
+export const { addReservations, removeReservations } = reservationSlice.actions
 export default reservationSlice.reducer

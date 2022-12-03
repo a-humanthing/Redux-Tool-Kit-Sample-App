@@ -1,10 +1,22 @@
 import React from "react"
-
-const ReservationCard = () => {
+import { useSelector, useDispatch } from "react-redux"
+import { removeReservations } from "../features/reservationSlice"
+interface ReservationCardTypes {
+  name: string
+  index: number
+}
+const ReservationCard = ({ name, index }: ReservationCardTypes) => {
+  const dispatch = useDispatch()
   return (
     <div>
-      <div className="reservation-card-container">Laith Harb</div>
-      <div className="reservation-card-container">Laith Harb</div>
+      <div
+        onClick={() => {
+          dispatch(removeReservations(index))
+        }}
+        className="reservation-card-container"
+      >
+        {name}
+      </div>
     </div>
   )
 }
