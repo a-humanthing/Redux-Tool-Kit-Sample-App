@@ -4,7 +4,7 @@ interface reservationTypes {
   value: string[]
 }
 const initialState: reservationTypes = {
-  value: ["arun", "sana"],
+  value: [],
 }
 
 export const reservationSlice = createSlice({

@@ -4,6 +4,7 @@ import { RouteState } from "./app/store"
 import { useDispatch, useSelector } from "react-redux"
 import ReservationCard from "./Components/ReservationCard"
 import { addReservations } from "./features/reservationSlice"
+import CustomerCard from "./Components/CustomerCard"
 
 function App() {
   const [reservationName, setReservationname] = useState("")
@@ -14,7 +15,12 @@ function App() {
   const handleAddReservation = () => {
     if (!reservationName) return
     dispatch(addReservations(reservationName))
+    setReservationname("")
   }
+
+  const [activeCustomers, setActiveCustomers] = useState("")
+  const customers = useSelector((state: RouteState) => state.customer.value)
+
   return (
     <div className="App">
       <div className="container">
@@ -36,16 +42,15 @@ function App() {
           </div>
         </div>
         <div className="customer-food-container">
-          <div className="customer-food-card-container">
-            <p>Selena Gomez</p>
-            <div className="customer-foods-container">
-              <div className="customer-food"></div>
-              <div className="customer-food-input-container">
-                <input />
-                <button>Add</button>
-              </div>
-            </div>
-          </div>
+          {customers.map((customer) => {
+            return (
+              <CustomerCard
+                id={customer.id}
+                name={customer.name}
+                food={customer.food}
+              />
+            )
+          })}
         </div>
       </div>
     </div>
