@@ -1,17 +1,24 @@
 import React, { useState } from "react"
 import "./App.css"
-import { RouteState } from "./app/store"
+import { RouteState, store } from "./app/store"
 import { useDispatch, useSelector } from "react-redux"
 import ReservationCard from "./Components/ReservationCard"
 import { addReservations } from "./features/reservationSlice"
 import CustomerCard from "./Components/CustomerCard"
+import { fetchUsers } from "./features/userSlice"
+import SpinningWheel from "./Components/SpinningWheel"
 
 function App() {
+  const dispatch = useDispatch<any>()
+  dispatch(fetchUsers())
+
+  const data = store.getState()
+
   const [reservationName, setReservationname] = useState("")
   const reservations = useSelector(
     (state: RouteState) => state.reservations.value
   )
-  const dispatch = useDispatch()
+
   const handleAddReservation = () => {
     if (!reservationName) return
     dispatch(addReservations(reservationName))
@@ -23,6 +30,7 @@ function App() {
 
   return (
     <div className="App">
+      {data.user.loading && <SpinningWheel />}
       <div className="container">
         <div className="reservation-container">
           <div>
